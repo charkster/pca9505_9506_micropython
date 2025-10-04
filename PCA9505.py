@@ -24,7 +24,7 @@ class PCA9505():
     def get_io(self, bank=0, pin=0):
         return (int.from_bytes(self.i2c.readfrom_mem(self.slave_address, self.INPUT_BASE_ADDR + bank, 1)) & (1 << pin)) >> pin
     
-    def set_all_io(self, bit_list=[]): # bit_list is an list of 40 numbers, each either 1 or 0
+    def set_all_io(self, bit_list=[]): # bit_list is a list of 40 numbers, each either 1 or 0, LSB -> MSB, Bank 0 -> Bank 5
         list_of_bytes = []
         for offset in range(0,40,8):
             byte = 0
@@ -33,7 +33,7 @@ class PCA9505():
             list_of_bytes.append(byte)
         self.i2c.writeto_mem(self.slave_address, self.OUTPUT_BASE_ADDR + self.MULTI_BYTE, bytearray(list_of_bytes))
     
-    def read_all_io(self):
+    def read_all_io(self): # returns a list of 40 values, LSB -> MSB, Bank 0 -> Bank 4
         result = []
         for byte in list(self.i2c.readfrom_mem(self.slave_address, self.INPUT_BASE_ADDR + self.MULTI_BYTE, 5)):
             result += [(byte >> bit) & 1 for bit in range(0, 8)]
