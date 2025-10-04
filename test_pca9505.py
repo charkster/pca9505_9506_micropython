@@ -5,7 +5,7 @@ i2c = machine.I2C(1,sda=machine.Pin(6), scl=machine.Pin(7), freq=400000) # rp204
 io1 = PCA9505(i2c=i2c, slave_address=0x21)
 
 io1.init_all_outputs()
-io1.set_all_io([0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0])
+io1.set_all_io([0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0]) # LSB -> MSB, Bank 0 -> Bank 4
 io1.read_all_io()
 io1.get_io(bank=0,pin=3)
 io1.get_io(bank=0,pin=4)
